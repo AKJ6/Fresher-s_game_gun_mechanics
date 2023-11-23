@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://6hfbor3vj5y0"]
+
+[ext_resource type="PackedScene" uid="uid://dfbsdslvbjya4" path="res://player.tscn" id="1_x832l"]
+[ext_resource type="PackedScene" uid="uid://cl14bomkav1bg" path="res://gun_pickup.tscn" id="2_3vp7i"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_b2tbm"]
+size = Vector2(1000, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hq40b"]
+size = Vector2(1000, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tday7"]
+size = Vector2(120, 190)
+
+[sub_resource type="QuadMesh" id="QuadMesh_wts7d"]
+size = Vector2(120, 190)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q4nb5"]
+size = Vector2(121, 191)
+
+[node name="game" type="Node2D"]
+
+[node name="Platform" type="MeshInstance2D" parent="."]
+mesh = SubResource("QuadMesh_b2tbm")
+
+[node name="Platform" type="StaticBody2D" parent="Platform"]
+disable_mode = 1
+collision_mask = 3
+
+[node name="Platform" type="CollisionShape2D" parent="Platform/Platform"]
+shape = SubResource("RectangleShape2D_hq40b")
+
+[node name="Player" parent="." instance=ExtResource("1_x832l")]
+position = Vector2(1, -106)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="RigidBody2D" parent="." instance=ExtResource("2_3vp7i")]
+position = Vector2(308, -184)
+collision_layer = 1
+
+[node name="RigidBody2D2" type="RigidBody2D" parent="."]
+position = Vector2(-292, -156)
+mass = 0.01
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D2"]
+shape = SubResource("RectangleShape2D_tday7")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="RigidBody2D2"]
+mesh = SubResource("QuadMesh_wts7d")
+
+[node name="Area2D" type="Area2D" parent="RigidBody2D2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D2/Area2D"]
+shape = SubResource("RectangleShape2D_q4nb5")
+
+[connection signal="timeout" from="Timer" to="Player" method="_on_timer_timeout"]

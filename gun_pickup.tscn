@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl14bomkav1bg"]
+
+[ext_resource type="Script" path="res://gun_pickup.gd" id="1_i10ul"]
+[ext_resource type="Script" path="res://gun_pickup1.gd" id="1_nojpp"]
+[ext_resource type="Texture2D" uid="uid://cul5hbv5wjneo" path="res://icon.svg" id="2_84x6t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_apgr5"]
+size = Vector2(80, 136)
+
+[node name="Gun" type="RigidBody2D"]
+rotation = 1.5708
+collision_layer = 2
+lock_rotation = true
+script = ExtResource("1_nojpp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.570313, 1)
+texture = ExtResource("2_84x6t")
+
+[node name="Area2D" type="Area2D" parent="." groups=["Gun", "Player"]]
+script = ExtResource("1_i10ul")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-2, -1)
+shape = SubResource("RectangleShape2D_apgr5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_apgr5")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
